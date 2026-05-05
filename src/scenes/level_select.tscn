@@ -1,0 +1,183 @@
+[gd_scene load_steps=8 format=3 uid="uid://levelselect"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.15, 0.15, 0.2, 0.95)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
+bg_color = Color(0.29, 0.59, 0.29, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_hover"]
+bg_color = Color(0.35, 0.7, 0.35, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_locked"]
+bg_color = Color(0.3, 0.3, 0.3, 0.8)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_back"]
+bg_color = Color(0.4, 0.4, 0.5, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="LevelSelect" type="CanvasLayer"]
+
+[node name="BG" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.1, 0.12, 0.18, 1)
+
+[node name="Title" type="Label" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 60.0
+offset_bottom = 120.0
+theme_override_colors/font_color = Color(1, 0.9, 0.7, 1)
+theme_override_font_sizes/font_size = 42
+text = "Select Level"
+horizontal_alignment = 1
+
+[node name="LevelGrid" type="HBoxContainer" parent="."]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -150.0
+offset_bottom = 150.0
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="Level1" type="VBoxContainer" parent="LevelGrid"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="LevelBtn" type="Button" parent="LevelGrid/Level1"]
+custom_minimum_size = Vector2(180, 220)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+
+[node name="LevelLabel" type="Label" parent="LevelGrid/Level1"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "Level 1"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="LevelGrid/Level1"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 14
+text = "Kitchen"
+horizontal_alignment = 1
+
+[node name="Locked" type="Label" parent="LevelGrid/Level1"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "🔒 Locked"
+horizontal_alignment = 1
+
+[node name="Level2" type="VBoxContainer" parent="LevelGrid"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="LevelBtn" type="Button" parent="LevelGrid/Level2"]
+custom_minimum_size = Vector2(180, 220)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+
+[node name="LevelLabel" type="Label" parent="LevelGrid/Level2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "Level 2"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="LevelGrid/Level2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 14
+text = "Bedroom"
+horizontal_alignment = 1
+
+[node name="Locked" type="Label" parent="LevelGrid/Level2"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "🔒 Locked"
+horizontal_alignment = 1
+
+[node name="Level3" type="VBoxContainer" parent="LevelGrid"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="LevelBtn" type="Button" parent="LevelGrid/Level3"]
+custom_minimum_size = Vector2(180, 220)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+
+[node name="LevelLabel" type="Label" parent="LevelGrid/Level3"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "Level 3"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="LevelGrid/Level3"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 14
+text = "Garden"
+horizontal_alignment = 1
+
+[node name="Locked" type="Label" parent="LevelGrid/Level3"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "🔒 Locked"
+horizontal_alignment = 1
+
+[node name="BackBtn" type="Button" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -100.0
+offset_right = 80.0
+offset_bottom = -50.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_back")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+text = "Back"
+
+[connection signal="pressed" from="LevelGrid/Level1/LevelBtn" to="." method="_on_level_1_pressed"]
+[connection signal="pressed" from="LevelGrid/Level2/LevelBtn" to="." method="_on_level_2_pressed"]
+[connection signal="pressed" from="LevelGrid/Level3/LevelBtn" to="." method="_on_level_3_pressed"]
+[connection signal="pressed" from="BackBtn" to="." method="_on_back_pressed"]

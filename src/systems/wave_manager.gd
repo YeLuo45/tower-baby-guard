@@ -15,9 +15,9 @@ const WAVE_CONFIGS: Array[Dictionary] = [
 	{"enemies": [{"type": "bedtime", "count": 5}, {"type": "tantrum", "count": 5}], "spawn_delay": 1.3},
 	{"enemies": [{"type": "veggie", "count": 5}, {"type": "screen_time", "count": 3}], "spawn_delay": 1.2},
 	{"enemies": [{"type": "tantrum", "count": 8}, {"type": "bedtime", "count": 4}, {"type": "veggie", "count": 3}], "spawn_delay": 1.0},
-	{"enemies": [{"type": "screen_time", "count": 6}, {"type": "veggie", "count": 4}], "spawn_delay": 1.0},
-	{"enemies": [{"type": "tantrum", "count": 10}, {"type": "bedtime", "count": 5}, {"type": "veggie", "count": 5}, {"type": "screen_time", "count": 5}], "spawn_delay": 0.8},
-	{"enemies": [{"type": "tantrum", "count": 12}, {"type": "bedtime", "count": 6}, {"type": "veggie", "count": 6}, {"type": "screen_time", "count": 6}], "spawn_delay": 0.7, "boss_modifier": 2.0},
+	{"enemies": [{"type": "screen_time", "count": 6}, {"type": "veggie", "count": 4}, {"type": "bath_time", "count": 2}], "spawn_delay": 1.0},
+	{"enemies": [{"type": "tantrum", "count": 10}, {"type": "bedtime", "count": 5}, {"type": "veggie", "count": 5}, {"type": "screen_time", "count": 5}, {"type": "bath_time", "count": 3}], "spawn_delay": 0.8},
+	{"enemies": [{"type": "tantrum", "count": 12}, {"type": "bedtime", "count": 6}, {"type": "veggie", "count": 6}, {"type": "screen_time", "count": 6}, {"type": "bath_time", "count": 4}, {"type": "outing_refusal", "count": 3}], "spawn_delay": 0.7, "boss_modifier": 2.0},
 ]
 
 var current_wave_index: int = -1
@@ -106,6 +106,9 @@ func _spawn_next_enemy() -> void:
 		pf.loop = false
 		path.add_child(pf)
 		pf.add_child(enemy)
+		# Apply boss visual if this is a boss wave
+		if enemy_data["hp_modifier"] > 1.0:
+			enemy.apply_boss_mode()
 		spawn_timer = get_spawn_delay()
 
 func _get_enemy_scene(enemy_type: String) -> PackedScene:
@@ -114,6 +117,8 @@ func _get_enemy_scene(enemy_type: String) -> PackedScene:
 		"bedtime": return preload("res://src/entities/enemies/bedtime.tscn")
 		"veggie": return preload("res://src/entities/enemies/veggie.tscn")
 		"screen_time": return preload("res://src/entities/enemies/screen_time.tscn")
+		"bath_time": return preload("res://src/entities/enemies/bath_time.tscn")
+		"outing_refusal": return preload("res://src/entities/enemies/outing_refusal.tscn")
 	return null
 
 func check_wave_complete() -> bool:

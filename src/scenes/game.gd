@@ -112,10 +112,14 @@ func _connect_signals() -> void:
 	
 	# Connect audio
 	combat_system.enemy_killed.connect(_on_enemy_killed_audio)
+	
+	# Connect achievements
+	Achievements.achievement_unlocked.connect(_on_achievement_unlocked)
 
 func _on_enemy_killed_audio(enemy: Enemy, reward: int) -> void:
 	audio_system.notify_enemy_death()
 	audio_system.notify_gold()
+	Achievements.on_enemy_killed()
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -190,6 +194,7 @@ func _place_tower_at_mouse() -> void:
 		# Notify combat system
 		combat_system.register_tower(tower)
 		audio_system.notify_tower_placed()
+		Achievements.on_tower_placed(selected_tower_type)
 		
 		hud.update_tower_info("Placed %s Tower" % selected_tower_type.capitalize())
 
@@ -246,17 +251,18 @@ func _on_upgrade_tower_pressed() -> void:
 		return
 	GameState.gold -= cost
 	selected_tower.upgrade()
+	Achievements.on_tower_upgraded()
 	_show_tower_action_panel(selected_tower)  # Refresh panel
 	hud.update_tower_info("Upgraded %s to Level %d!" % [selected_tower.tower_name, selected_tower.tower_level])
 
 func _on_sell_tower_pressed() -> void:
 	if selected_tower == null:
 		return
+	Achievements.on_tower_sold()
 	var refund = selected_tower.sell()
 	GameState.gold += refund
 	$TowerActionPanel.visible = false
 	selected_tower = null
-	combat_system.unregister_tower(selected_tower)
 	hud.update_tower_info("Tower sold for %dg" % refund)
 
 func _on_cancel_tower_action() -> void:
@@ -281,9 +287,11 @@ func _on_wave_changed(wave: int) -> void:
 
 func _on_game_over() -> void:
 	$GameOverScreen.visible = true
+	audio_system.notify_game_over()
 
 func _on_victory() -> void:
 	$VictoryScreen.visible = true
+	audio_system.notify_victory()
 
 func _on_wave_started(wave_number: int) -> void:
 	hud.update_wave(wave_number)
@@ -291,6 +299,7 @@ func _on_wave_started(wave_number: int) -> void:
 
 func _on_wave_completed(wave_number: int) -> void:
 	hud.set_wave_button_enabled(true)
+	Achievements.on_wave_completed(wave_number)
 	if wave_number < GameState.MAX_WAVES:
 		hud.update_tower_info("Wave %d complete! Prepare for the next wave!" % wave_number)
 
@@ -302,3 +311,6 @@ func start_next_wave() -> void:
 
 func restart_game() -> void:
 	get_tree().reload_current_scene()
+
+func _on_achievement_unlocked(achievement_id: String, achievement_name: String) -> void:
+	hud.update_tower_info("🏆 Achievement: %s" % achievement_name)

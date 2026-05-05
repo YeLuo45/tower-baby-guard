@@ -8,6 +8,7 @@ signal lives_changed(amount: int)
 signal wave_changed(wave: int)
 signal game_over()
 signal victory()
+signal level_completed(level: int)
 
 var gold: int = 200:
 	set(value):
@@ -24,11 +25,45 @@ var lives: int = 20:
 var current_wave: int = 0
 var is_paused: bool = false
 var is_game_active: bool = false
+var current_level: int = 0
 
 const MAX_WAVES: int = 10
+const MAX_LEVELS: int = 3
+
+# Level unlock system - unlocked levels stored in user settings
+var _unlocked_levels: Array[int] = [0]  # Level 0 always unlocked
 
 func _ready() -> void:
 	pause_mode = Node.PAUSE_MODE_PROCESS
+	_load_progress()
+
+func _load_progress() -> void:
+	# Load from user:// (persistent storage)
+	var save_file = FileAccess.get_user://("savegame.dat", FileAccess.READ)
+	if save_file:
+		var unlocked_count = save_file.get_8()
+		_unlocked_levels.clear()
+		for i in range(unlocked_count):
+			_unlocked_levels.append(save_file.get_8())
+		save_file.close()
+	else:
+		_unlocked_levels = [0]  # Default: only level 0 unlocked
+
+func _save_progress() -> void:
+	var save_file = FileAccess.get_user://("savegame.dat", FileAccess.WRITE)
+	if save_file:
+		save_file.store_8(_unlocked_levels.size())
+		for level in _unlocked_levels:
+			save_file.store_8(level)
+		save_file.close()
+
+func is_level_unlocked(level_index: int) -> bool:
+	return _unlocked_levels.has(level_index)
+
+func unlock_level(level_index: int) -> void:
+	if not _unlocked_levels.has(level_index) and level_index < MAX_LEVELS:
+		_unlocked_levels.append(level_index)
+		_save_progress()
 
 func start_game() -> void:
 	gold = 200
@@ -42,6 +77,13 @@ func next_wave() -> void:
 	wave_changed.emit(current_wave)
 	if current_wave >= MAX_WAVES:
 		victory.emit()
+		_complete_level()
+
+func _complete_level() -> void:
+	level_completed.emit(current_level)
+	# Unlock next level
+	if current_level < MAX_LEVELS - 1:
+		unlock_level(current_level + 1)
 
 func toggle_pause() -> void:
 	is_paused = !is_paused

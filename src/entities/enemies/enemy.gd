@@ -144,3 +144,13 @@ func _reach_end() -> void:
 
 func get_health_percentage() -> float:
 	return health / max_health if max_health > 0 else 0.0
+
+func apply_boss_mode() -> void:
+	# Make enemy bigger and meaner-looking for boss waves
+	if has_node("Sprite2D"):
+		var sprite = get_node("Sprite2D")
+		sprite.scale *= 1.5  # 50% bigger
+		sprite.modulate = Color(1.0, 0.2, 0.2, 1.0)  # Reddish tint
+	if has_node("HealthBar"):
+		var bar = get_node("HealthBar")
+		bar.bar_bg_color = Color(0.8, 0.0, 0.0, 1.0)  # Red background

@@ -12,13 +12,14 @@ config_version=5
 
 config/name="BabyGuard Tower Defense"
 config/description="A parenting-themed tower defense game for kids"
-run/main_scene="res://src/scenes/game.tscn"
+run/main_scene="res://src/scenes/level_select.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 GameState="*res://src/core/game_state.gd"
+Achievements="*res://src/systems/achievement_system.gd"
 
 [display]
 
