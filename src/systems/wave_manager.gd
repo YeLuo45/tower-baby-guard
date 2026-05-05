@@ -42,7 +42,7 @@ func start_next_wave() -> bool:
 	
 	var config = WAVE_CONFIGS[current_wave_index]
 	spawn_queue = _build_spawn_queue(config)
-	spawn_timer = 0.0
+	spawn_timer = 0.0  # Spawn first enemy immediately
 	
 	wave_started.emit(current_wave_index + 1)
 	GameState.next_wave()
@@ -64,11 +64,29 @@ func _build_spawn_queue(config: Dictionary) -> Array[Dictionary]:
 
 func _process(delta: float) -> void:
 	if not is_spawning or spawn_queue.is_empty():
+		# Check if wave is complete (no enemies left)
+		if is_wave_active and get_tree().get_nodes_in_group("enemies").is_empty():
+			# Small delay before marking complete to allow for queue to empty
+			if not _wave_complete_pending:
+				_wave_complete_pending = true
+				_wave_complete_timer = 0.5  # 0.5 second grace period
 		return
 	
 	spawn_timer -= delta
 	if spawn_timer <= 0:
 		_spawn_next_enemy()
+
+var _wave_complete_pending: bool = false
+var _wave_complete_timer: float = 0.0
+
+func _physics_process(delta: float) -> void:
+	if _wave_complete_pending:
+		_wave_complete_timer -= delta
+		if _wave_complete_timer <= 0:
+			_wave_complete_pending = false
+			if is_wave_active and get_tree().get_nodes_in_group("enemies").is_empty():
+				is_wave_active = false
+				wave_completed.emit(current_wave_index + 1)
 
 func _spawn_next_enemy() -> void:
 	if spawn_queue.is_empty():
@@ -83,8 +101,12 @@ func _spawn_next_enemy() -> void:
 		var enemy = enemy_scene.instantiate()
 		enemy.max_health *= enemy_data["hp_modifier"]
 		enemy.health = enemy.max_health
-		add_child(enemy)
-		enemy.follow_path(path)
+		# Create a new PathFollow2D for this enemy
+		var pf = PathFollow2D.new()
+		pf.loop = false
+		path.add_child(pf)
+		pf.add_child(enemy)
+		spawn_timer = get_spawn_delay()
 
 func _get_enemy_scene(enemy_type: String) -> PackedScene:
 	match enemy_type:
