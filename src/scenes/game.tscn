@@ -80,6 +80,9 @@ script = ExtResource(2_tower_placer)
 [node name="CombatSystem" type="Node" parent="."]
 script = ExtResource(3_combat)
 
+[node name="AudioSystem" type="Node" parent="."]
+script = ExtResource("res://src/systems/audio_system.gd")
+
 [node name="WaveManager" type="Node" parent="."]
 script = ExtResource(7_wavemanager)
 
@@ -285,6 +288,61 @@ text = "Play Again"
 visible = false
 modulate = Color(1, 1, 1, 0.5)
 
+[node name="TowerActionPanel" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -80.0
+offset_right = 120.0
+offset_bottom = 80.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="TowerActionPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TowerName" type="Label" parent="TowerActionPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "Tower"
+horizontal_alignment = 1
+
+[node name="TowerLevel" type="Label" parent="TowerActionPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 14
+text = "Level 1"
+horizontal_alignment = 1
+
+[node name="UpgradeBtn" type="Button" parent="TowerActionPanel/VBox"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+text = "Upgrade (75g)"
+
+[node name="SellBtn" type="Button" parent="TowerActionPanel/VBox"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+text = "Sell (50g)"
+
+[node name="CancelBtn" type="Button" parent="TowerActionPanel/VBox"]
+custom_minimum_size = Vector2(200, 35)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+text = "Cancel"
+
 [connection signal="pressed" from="HUD/TopPanel/HBox/StartWaveButton" to="HUD" method="_on_start_wave_pressed"]
 [connection signal="pressed" from="HUD/BottomPanel/TowerSelectBox/MomTowerBtn" to="HUD" method="_on_mom_tower_selected"]
 [connection signal="pressed" from="HUD/BottomPanel/TowerSelectBox/DadTowerBtn" to="HUD" method="_on_dad_tower_selected"]
@@ -293,3 +351,6 @@ modulate = Color(1, 1, 1, 0.5)
 [connection signal="pressed" from="HUD/BottomPanel/TowerSelectBox/ChefTowerBtn" to="HUD" method="_on_chef_tower_selected"]
 [connection signal="pressed" from="GameOverScreen/GameOverPanel/VBox/RestartBtn" to="GameOverScreen" method="_on_restart_pressed"]
 [connection signal="pressed" from="VictoryScreen/VictoryPanel/VBox/PlayAgainBtn" to="VictoryScreen" method="_on_play_again_pressed"]
+[connection signal="pressed" from="TowerActionPanel/VBox/UpgradeBtn" to="." method="_on_upgrade_tower_pressed"]
+[connection signal="pressed" from="TowerActionPanel/VBox/SellBtn" to="." method="_on_sell_tower_pressed"]
+[connection signal="pressed" from="TowerActionPanel/VBox/CancelBtn" to="." method="_on_cancel_tower_action"]

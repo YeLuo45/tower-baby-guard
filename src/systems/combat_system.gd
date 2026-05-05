@@ -33,6 +33,7 @@ func _on_enemy_died(enemy: Enemy, reward: int) -> void:
 	GameState.gold += reward
 	enemy_killed.emit(enemy, reward)
 	combat_log.emit("Enemy killed! +%d gold" % reward)
+	# Audio feedback is handled by connecting to audio_system signals
 
 func _cleanup_invalid_targets() -> void:
 	# Remove invalid entries from lists

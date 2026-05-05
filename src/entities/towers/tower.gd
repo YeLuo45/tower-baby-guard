@@ -90,6 +90,9 @@ func upgrade() -> void:
 func get_upgrade_cost() -> int:
 	return int(cost * tower_level * 0.75)
 
+func get_sell_value() -> int:
+	return int(cost * 0.5)
+
 func sell() -> int:
 	var refund = int(cost * 0.5)
 	tower_sold.emit(self, refund)

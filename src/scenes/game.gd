@@ -8,10 +8,12 @@ extends Node2D
 @onready var combat_system: Node = $CombatSystem
 @onready var hud: CanvasLayer = $HUD
 @onready var path_2d: Path2D = $Path2D
+@onready var audio_system: Node = $AudioSystem
 
 var selected_tower_type: String = ""
 var preview_tower: Sprite2D = null
 var can_place_tower: bool = false
+var selected_tower: Tower = null
 
 const GRID_SIZE: int = 64
 const GRID_WIDTH: int = 20
@@ -107,14 +109,22 @@ func _connect_signals() -> void:
 	wave_manager.wave_started.connect(_on_wave_started)
 	wave_manager.wave_completed.connect(_on_wave_completed)
 	wave_manager.all_waves_completed.connect(_on_all_waves_completed)
+	
+	# Connect audio
+	combat_system.enemy_killed.connect(_on_enemy_killed_audio)
+
+func _on_enemy_killed_audio(enemy: Enemy, reward: int) -> void:
+	audio_system.notify_enemy_death()
+	audio_system.notify_gold()
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			_handle_left_click()
+		elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			_cancel_tower_selection()
+	elif event is InputEventMouseMotion:
 		_update_preview_position()
-	elif event.is_action_pressed("place_tower") and selected_tower_type != "":
-		_place_tower_at_mouse()
-	elif event.is_action_pressed("cancel_action"):
-		_cancel_tower_selection()
 
 func _update_preview_position() -> void:
 	if selected_tower_type == "" or preview_tower == null:
@@ -179,14 +189,79 @@ func _place_tower_at_mouse() -> void:
 		
 		# Notify combat system
 		combat_system.register_tower(tower)
+		audio_system.notify_tower_placed()
 		
 		hud.update_tower_info("Placed %s Tower" % selected_tower_type.capitalize())
 
 func _cancel_tower_selection() -> void:
 	selected_tower_type = ""
+	selected_tower = null
 	preview_tower.visible = false
+	$TowerActionPanel.visible = false
 	hud.clear_tower_info()
 
+func _handle_left_click() -> void:
+	var mouse_pos = get_global_mouse_position()
+	
+	# If placing a tower
+	if selected_tower_type != "":
+		_place_tower_at_mouse()
+		return
+	
+	# Check if clicking on existing tower
+	var towers = tower_grid.get_children().filter(func(c): return c is Tower)
+	for tower in towers:
+		if tower.position.distance_to(mouse_pos) < GRID_SIZE / 2:
+			_show_tower_action_panel(tower)
+			return
+	
+	# Clicked on empty space - close panel
+	$TowerActionPanel.visible = false
+	selected_tower = null
+
+func _show_tower_action_panel(tower: Tower) -> void:
+	selected_tower = tower
+	var panel = $TowerActionPanel
+	var vbox = panel.get_node("VBox")
+	
+	vbox.get_node("TowerName").text = "%s Tower" % tower.tower_name.capitalize()
+	vbox.get_node("TowerLevel").text = "Level %d" % tower.tower_level
+	
+	var upgrade_cost = tower.get_upgrade_cost()
+	vbox.get_node("UpgradeBtn").text = "Upgrade (%dg)" % upgrade_cost
+	vbox.get_node("UpgradeBtn").disabled = GameState.gold < upgrade_cost
+	
+	var sell_value = tower.get_sell_value()
+	vbox.get_node("SellBtn").text = "Sell (%dg)" % sell_value
+	
+	# Position near tower
+	panel.position = tower.position + Vector2(40, -80)
+	panel.visible = true
+
+func _on_upgrade_tower_pressed() -> void:
+	if selected_tower == null:
+		return
+	var cost = selected_tower.get_upgrade_cost()
+	if GameState.gold < cost:
+		return
+	GameState.gold -= cost
+	selected_tower.upgrade()
+	_show_tower_action_panel(selected_tower)  # Refresh panel
+	hud.update_tower_info("Upgraded %s to Level %d!" % [selected_tower.tower_name, selected_tower.tower_level])
+
+func _on_sell_tower_pressed() -> void:
+	if selected_tower == null:
+		return
+	var refund = selected_tower.sell()
+	GameState.gold += refund
+	$TowerActionPanel.visible = false
+	selected_tower = null
+	combat_system.unregister_tower(selected_tower)
+	hud.update_tower_info("Tower sold for %dg" % refund)
+
+func _on_cancel_tower_action() -> void:
+	$TowerActionPanel.visible = false
+	selected_tower = null
 func select_tower(type: String) -> void:
 	selected_tower_type = type
 	preview_tower.visible = true
