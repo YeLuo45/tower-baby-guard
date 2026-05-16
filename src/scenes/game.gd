@@ -10,10 +10,17 @@ extends Node2D
 @onready var path_2d: Path2D = $Path2D
 @onready var audio_system: Node = $AudioSystem
 
+# Story and Event systems
+@onready var story_vignette: CanvasLayer = $StoryVignette
+@onready var event_system: Node = $EventSystem
+
 var selected_tower_type: String = ""
 var preview_tower: Sprite2D = null
 var can_place_tower: bool = false
 var selected_tower: Tower = null
+
+var _wave_story_shown: Dictionary = {}  # Track which stories have been shown
+var _pending_story: String = ""  # Story to show before next wave
 
 const GRID_SIZE: int = 64
 const GRID_WIDTH: int = 20
@@ -63,6 +70,12 @@ func _ready() -> void:
 	# Connect combo system signals
 	combo_system.combo_activated.connect(_on_combo_activated)
 	combo_system.combo_effect_triggered.connect(_on_combo_effect_triggered)
+	
+	# Connect story system
+	story_vignette.story_dismissed.connect(_on_story_dismissed)
+	
+	# Load level data if available
+	_load_level_data()
 
 func _setup_combo_meter() -> void:
 	var combo_meter_scene = preload("res://src/scenes/ui/combo_meter.tscn")
@@ -412,3 +425,86 @@ func restart_game() -> void:
 
 func _on_achievement_unlocked(achievement_id: String, achievement_name: String) -> void:
 	hud.update_tower_info("🏆 Achievement: %s" % achievement_name)
+
+func _load_level_data() -> void:
+	if GameState.current_level_data.is_empty():
+		return
+	
+	# Configure wave manager with level's wave definitions
+	var level_waves = GameState.current_level_data.get("waves", [])
+	if not level_waves.is_empty():
+		wave_manager.load_waves_from_level(GameState.current_level_data)
+	
+	# Show story before first wave if exists
+	var story_key = "story_before_wave_1"
+	var initial_story = GameState.current_level_data.get(story_key, "")
+	if initial_story != "":
+		_show_story_for_wave(1, initial_story)
+
+func _show_story_for_wave(wave_num: int, text: String) -> void:
+	if text == "" or _wave_story_shown.get(wave_num, false):
+		return
+	_wave_story_shown[wave_num] = true
+	_pending_story = text
+	story_vignette.show_story(text)
+
+func _on_story_dismissed() -> void:
+	# After story is dismissed, we can allow starting the wave
+	# The HUD button should be already disabled until story is done
+	pass
+
+func _check_and_show_story(wave_num: int) -> void:
+	# Check if there's a story text for this wave
+	var level_data = GameState.current_level_data
+	if level_data.is_empty():
+		return
+	
+	var story_key = "story_before_wave_%d" % wave_num
+	var story_text = level_data.get(story_key, "")
+	
+	if story_text != "" and not _wave_story_shown.get(wave_num, false):
+		_show_story_for_wave(wave_num, story_text)
+		return
+	
+	# Also check for events
+	_trigger_events_for_wave(wave_num)
+
+func _trigger_events_for_wave(wave_num: int) -> void:
+	var events = LevelLoader.get_events_for_wave(GameState.current_level_data, wave_num)
+	for event_data in events:
+		event_system.trigger_event(event_data)
+		var event_type = event_data.get("type", "")
+		_handle_event_effect(event_type, event_data)
+
+func _handle_event_effect(event_type: String, event_data: Dictionary) -> void:
+	match event_type:
+		"screen_flash":
+			_do_screen_flash(event_data.get("duration", 1.0))
+		"gold_rain":
+			_do_gold_rain(event_data.get("amount", 50))
+		"boss_mode":
+			_do_boss_mode()
+		"show_message":
+			hud.update_tower_info(event_data.get("message", ""))
+
+func _do_screen_flash(duration: float) -> void:
+	var flash_rect = ColorRect.new()
+	flash_rect.name = "FlashEffect"
+	flash_rect.color = Color.WHITE
+	flash_rect.anchor_right = 1.0
+	flash_rect.anchor_bottom = 1.0
+	flash_rect.show()
+	add_child(flash_rect)
+	
+	var tween = create_tween()
+	tween.tween_property(flash_rect, "modulate:a", 0.0, duration / 2)
+	await tween.finished
+	flash_rect.queue_free()
+
+func _do_gold_rain(amount: int) -> void:
+	hud.update_tower_info("+" + str(amount) + " gold! (gold rain)")
+	# Gold is already added by EventSystem
+
+func _do_boss_mode() -> void:
+	hud.update_tower_info("BOSS MODE ACTIVATED!")
+	wave_manager.activate_boss_mode()

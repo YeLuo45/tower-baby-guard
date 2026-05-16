@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://babyguardgame"]
+[gd_scene load_steps=20 format=3 uid="uid://babyguardgame"]
 
 [ext_resource type="Script" path="res://src/scenes/game.gd" id="1_game"]
 [ext_resource type="Script" path="res://src/scenes/tower_placer.gd" id="2_tower_placer"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://src/scenes/game_over_screen.gd" id="5_gameover"]
 [ext_resource type="Script" path="res://src/scenes/victory_screen.gd" id="6_victory"]
 [ext_resource type="Script" path="res://src/systems/wave_manager.gd" id="7_wavemanager"]
+[ext_resource type="Script" path="res://src/systems/event_system.gd" id="8_eventsystem"]
+[ext_resource type="PackedScene" uid="uid://storyvignette" path="res://src/scenes/ui/story_vignette.tscn" id="9_storyvignette"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_grid"]
 size = Vector2(64, 64)
@@ -354,3 +356,8 @@ text = "Cancel"
 [connection signal="pressed" from="TowerActionPanel/VBox/UpgradeBtn" to="." method="_on_upgrade_tower_pressed"]
 [connection signal="pressed" from="TowerActionPanel/VBox/SellBtn" to="." method="_on_sell_tower_pressed"]
 [connection signal="pressed" from="TowerActionPanel/VBox/CancelBtn" to="." method="_on_cancel_tower_action"]
+
+[node name="EventSystem" type="Node" parent="."]
+script = ExtResource(8_eventsystem)
+
+[node name="StoryVignette" parent="." instance=ExtResource(9_storyvignette)]

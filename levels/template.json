@@ -1,0 +1,16 @@
+{
+  "level_id": "custom_01",
+  "name": "我的自定义关卡",
+  "description": "创建你自己的关卡！",
+  "author": "PlayerName",
+  "difficulty": "normal",
+  "initial_gold": 200,
+  "initial_lives": 20,
+  "map_theme": "home",
+  "story_before_wave_1": "",
+  "events": [],
+  "waves": [
+    {"wave_number": 1, "enemies": [{"type": "tantrum", "count": 3}], "spawn_delay": 2.0},
+    {"wave_number": 2, "enemies": [{"type": "tantrum", "count": 5}], "spawn_delay": 2.0}
+  ]
+}

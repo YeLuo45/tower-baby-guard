@@ -25,6 +25,9 @@ AchievementPopup="*res://src/scenes/ui/achievement_popup.tscn"
 AllianceSystem="*res://src/systems/alliance_system.gd"
 ComboSystem="*res://src/systems/combo_system.gd"
 UpgradeSystem="*res://src/systems/upgrade_system.gd"
+LevelLoader="*res://src/systems/level_loader.gd"
+StorySystem="*res://src/systems/story_system.gd"
+EventSystem="*res://src/systems/event_system.gd"
 
 [display]
 

@@ -31,6 +31,11 @@ var is_game_active: bool = false
 var current_level: int = 0
 var game_start_lives: int = 20
 
+# Level data from JSON
+var current_level_data: Dictionary = {}
+var wave_definitions: Array = []
+var event_queue: Array = []
+
 const MAX_WAVES: int = 10
 const MAX_LEVELS: int = 3
 
@@ -72,13 +77,35 @@ func unlock_level(level_index: int) -> void:
 		_save_progress()
 
 func start_game() -> void:
+	_set_initial_state()
+	Persistence.start_session()
+
+func start_level(level_index: int, level_data: Dictionary) -> void:
+	_set_initial_state()
+	current_level = level_index
+	current_level_data = level_data
+	wave_definitions = level_data.get("waves", [])
+	event_queue = level_data.get("events", [])
+	
+	# Apply level initial settings
+	var initial_gold = level_data.get("initial_gold", 200)
+	var initial_lives = level_data.get("initial_lives", 20)
+	gold = initial_gold
+	lives = initial_lives
+	game_start_lives = initial_lives
+	
+	Persistence.start_session()
+
+func _set_initial_state() -> void:
 	gold = 200
 	lives = 20
 	game_start_lives = 20
 	current_wave = 0
 	is_paused = false
 	is_game_active = true
-	Persistence.start_session()
+	current_level_data = {}
+	wave_definitions = []
+	event_queue = []
 
 func next_wave() -> void:
 	current_wave += 1

@@ -7,7 +7,8 @@ signal wave_started(wave_number: int)
 signal wave_completed(wave_number: int)
 signal all_waves_completed()
 
-const WAVE_CONFIGS: Array[Dictionary] = [
+# Default hardcoded waves (fallback)
+const DEFAULT_WAVE_CONFIGS: Array[Dictionary] = [
 	{"enemies": [{"type": "tantrum", "count": 5}], "spawn_delay": 2.0},
 	{"enemies": [{"type": "tantrum", "count": 8}], "spawn_delay": 1.8},
 	{"enemies": [{"type": "tantrum", "count": 6}, {"type": "bedtime", "count": 2}], "spawn_delay": 1.5},
@@ -20,6 +21,8 @@ const WAVE_CONFIGS: Array[Dictionary] = [
 	{"enemies": [{"type": "tantrum", "count": 12}, {"type": "bedtime", "count": 6}, {"type": "veggie", "count": 6}, {"type": "screen_time", "count": 6}, {"type": "bath_time", "count": 4}, {"type": "outing_refusal", "count": 3}], "spawn_delay": 0.7, "boss_modifier": 2.0},
 ]
 
+var WAVE_CONFIGS: Array[Dictionary] = DEFAULT_WAVE_CONFIGS.duplicate()
+
 var current_wave_index: int = -1
 var spawn_queue: Array[Dictionary] = []
 var spawn_timer: float = 0.0
@@ -27,6 +30,8 @@ var is_spawning: bool = false
 var is_wave_active: bool = false
 
 @export var path_node: NodePath
+
+var _boss_mode_active: bool = false
 
 func _ready() -> void:
 	GameState.game_over.connect(_on_game_over)
@@ -143,3 +148,29 @@ func _on_victory() -> void:
 	is_spawning = false
 	is_wave_active = false
 	all_waves_completed.emit()
+
+func load_waves_from_level(level_data: Dictionary) -> void:
+	var waves = level_data.get("waves", [])
+	if waves.is_empty():
+		WAVE_CONFIGS = DEFAULT_WAVE_CONFIGS.duplicate()
+		return
+	
+	# Convert JSON wave format to WAVE_CONFIGS format
+	WAVE_CONFIGS = []
+	for wave in waves:
+		var enemies = wave.get("enemies", [])
+		var wave_config = {
+			"enemies": enemies,
+			"spawn_delay": wave.get("spawn_delay", 1.5),
+			"boss_modifier": wave.get("boss_modifier", 1.0)
+		}
+		WAVE_CONFIGS.append(wave_config)
+
+func activate_boss_mode() -> void:
+	_boss_mode_active = true
+	# Apply boss modifier to current wave if applicable
+	if current_wave_index >= 0 and current_wave_index < WAVE_CONFIGS.size():
+		WAVE_CONFIGS[current_wave_index]["boss_modifier"] = 2.0
+
+func is_boss_mode_active() -> bool:
+	return _boss_mode_active
