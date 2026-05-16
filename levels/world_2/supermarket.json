@@ -1,0 +1,20 @@
+{
+  "world": 2,
+  "scene_key": "supermarket",
+  "scene_name": "超市",
+  "theme": "urban",
+  "background_color": "#E8F4F8",
+  "special_mechanic": {"type": "crowd_interference", "description": "人群干扰", "effect": "tower_range_reduced_10pct"},
+  "waves": [
+    {"enemies": [{"type": "tantrum", "count": 6}], "spawn_delay": 1.6, "boss_modifier": 1.0, "speed_boost": 1.2},
+    {"enemies": [{"type": "tantrum", "count": 9}], "spawn_delay": 1.4, "boss_modifier": 1.0, "speed_boost": 1.2},
+    {"enemies": [{"type": "tantrum", "count": 7}, {"type": "bedtime", "count": 3}], "spawn_delay": 1.2, "boss_modifier": 1.0, "speed_boost": 1.2},
+    {"enemies": [{"type": "tantrum", "count": 6}, {"type": "veggie", "count": 4}], "spawn_delay": 1.2, "boss_modifier": 1.0, "speed_boost": 1.2},
+    {"enemies": [{"type": "bedtime", "count": 7}, {"type": "tantrum", "count": 6}], "spawn_delay": 1.0, "boss_modifier": 1.0, "speed_boost": 1.2},
+    {"enemies": [{"type": "veggie", "count": 6}, {"type": "screen_time", "count": 5}], "spawn_delay": 0.96, "boss_modifier": 1.0, "speed_boost": 1.2},
+    {"enemies": [{"type": "tantrum", "count": 10}, {"type": "bedtime", "count": 5}, {"type": "veggie", "count": 4}], "spawn_delay": 0.8, "boss_modifier": 1.0, "speed_boost": 1.2},
+    {"enemies": [{"type": "screen_time", "count": 8}, {"type": "veggie", "count": 6}, {"type": "bath_time", "count": 4}], "spawn_delay": 0.72, "boss_modifier": 1.0, "speed_boost": 1.2},
+    {"enemies": [{"type": "tantrum", "count": 12}, {"type": "bedtime", "count": 7}, {"type": "veggie", "count": 7}, {"type": "screen_time", "count": 7}, {"type": "bath_time", "count": 5}], "spawn_delay": 0.64, "boss_modifier": 1.0, "speed_boost": 1.2},
+    {"enemies": [{"type": "tantrum", "count": 14}, {"type": "bedtime", "count": 8}, {"type": "veggie", "count": 8}, {"type": "screen_time", "count": 8}, {"type": "bath_time", "count": 6}, {"type": "outing_refusal", "count": 5}], "spawn_delay": 0.56, "boss_modifier": 2.0, "speed_boost": 1.2}
+  ]
+}

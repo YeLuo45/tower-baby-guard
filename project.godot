@@ -30,6 +30,7 @@ StorySystem="*res://src/systems/story_system.gd"
 EventSystem="*res://src/systems/event_system.gd"
 AudioManager="*res://src/systems/audio_manager.gd"
 ScreenShake="*res://src/systems/screen_shake.gd"
+WorldProgress="*res://src/systems/world_progress.gd"
 
 [display]
 

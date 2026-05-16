@@ -1,0 +1,20 @@
+{
+  "world": 1,
+  "scene_key": "kitchen",
+  "scene_name": "厨房",
+  "theme": "warm",
+  "background_color": "#FFF8E7",
+  "special_mechanic": null,
+  "waves": [
+    {"enemies": [{"type": "tantrum", "count": 5}, {"type": "veggie", "count": 2}], "spawn_delay": 2.0, "boss_modifier": 1.0},
+    {"enemies": [{"type": "tantrum", "count": 8}, {"type": "veggie", "count": 3}], "spawn_delay": 1.8, "boss_modifier": 1.0},
+    {"enemies": [{"type": "tantrum", "count": 6}, {"type": "bedtime", "count": 3}, {"type": "veggie", "count": 2}], "spawn_delay": 1.5, "boss_modifier": 1.0},
+    {"enemies": [{"type": "tantrum", "count": 5}, {"type": "veggie", "count": 5}], "spawn_delay": 1.4, "boss_modifier": 1.0},
+    {"enemies": [{"type": "bedtime", "count": 6}, {"type": "veggie", "count": 5}], "spawn_delay": 1.2, "boss_modifier": 1.0},
+    {"enemies": [{"type": "veggie", "count": 7}, {"type": "screen_time", "count": 4}], "spawn_delay": 1.1, "boss_modifier": 1.0},
+    {"enemies": [{"type": "tantrum", "count": 8}, {"type": "bedtime", "count": 5}, {"type": "veggie", "count": 5}], "spawn_delay": 1.0, "boss_modifier": 1.0},
+    {"enemies": [{"type": "screen_time", "count": 6}, {"type": "veggie", "count": 6}, {"type": "bath_time", "count": 4}], "spawn_delay": 0.9, "boss_modifier": 1.0},
+    {"enemies": [{"type": "tantrum", "count": 10}, {"type": "bedtime", "count": 6}, {"type": "veggie", "count": 7}, {"type": "screen_time", "count": 6}, {"type": "bath_time", "count": 4}], "spawn_delay": 0.7, "boss_modifier": 1.0},
+    {"enemies": [{"type": "tantrum", "count": 13}, {"type": "bedtime", "count": 7}, {"type": "veggie", "count": 8}, {"type": "screen_time", "count": 7}, {"type": "bath_time", "count": 5}, {"type": "outing_refusal", "count": 4}], "spawn_delay": 0.6, "boss_modifier": 2.0}
+  ]
+}
