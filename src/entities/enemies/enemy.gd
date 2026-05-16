@@ -93,6 +93,11 @@ func apply_slow(factor: float, duration: float) -> void:
 		slow_factor = 1.0
 		is_slowed = false
 
+func apply_extra_slow(additional_slow: float) -> void:
+	# Additional slow from Dad's Timeout combo
+	slow_factor = min(slow_factor, additional_slow)
+	is_slowed = true
+
 func apply_stun(duration: float) -> void:
 	if is_stunned:
 		return

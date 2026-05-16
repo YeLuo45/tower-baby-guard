@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://combo_meter_ui"]
+
+[ext_resource type="Script" path="res://src/scenes/ui/combo_meter.gd" id="1_combo_meter"]
+
+[node name="ComboMeter" type="Control"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -60.0
+offset_right = 320.0
+offset_bottom = -10.0
+script = ExtResource("1_combo_meter")
+
+[node name="ComboContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+theme_override_constants/separation = 8

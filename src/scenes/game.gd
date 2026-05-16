@@ -35,14 +35,39 @@ const TOWER_COSTS: Dictionary = {
 	"chef": 175,
 }
 
+# Alliance and Combo systems
+var alliance_system: Node = null
+var combo_system: Node = null
+var combo_meter: Control = null
+var alliance_range_circle: Node2D = null
+
 func _ready() -> void:
 	GameState.start_game()
 	_setup_grid_cells()
 	_setup_wave_manager()
+	_setup_combo_meter()
+	_setup_alliance_range_indicator()
 	_connect_signals()
 	
 	# Create preview tower for placement
 	preview_tower = $PreviewTower
+	
+	# Get references to autoloaded systems
+	alliance_system = get_node("/root/AllianceSystem")
+	combo_system = get_node("/root/ComboSystem")
+
+func _setup_combo_meter() -> void:
+	var combo_meter_scene = preload("res://src/scenes/ui/combo_meter.tscn")
+	combo_meter = combo_meter_scene.instantiate()
+	combo_meter.name = "ComboMeter"
+	hud.add_child(combo_meter)
+	combo_meter.setup(combo_system, alliance_system)
+
+func _setup_alliance_range_indicator() -> void:
+	alliance_range_circle = preload("res://src/scenes/ui/alliance_range.tscn").instantiate()
+	alliance_range_circle.name = "AllianceRangeCircle"
+	add_child(alliance_range_circle)
+	alliance_range_circle.show_alliance_range(false)
 
 func _setup_grid_cells() -> void:
 	# Create grid cells for tower placement
@@ -196,7 +221,18 @@ func _place_tower_at_mouse() -> void:
 		audio_system.notify_tower_placed()
 		Achievements.on_tower_placed(selected_tower_type)
 		
+		# Register with alliance system
+		if alliance_system:
+			alliance_system.register_tower(tower)
+		
 		hud.update_tower_info("Placed %s Tower" % selected_tower_type.capitalize())
+		
+		# Show alliance range briefly
+		if alliance_range_circle:
+			alliance_range_circle.set_tower(tower)
+			alliance_range_circle.show_alliance_range(true)
+			await get_tree().create_timer(2.0).timeout
+			alliance_range_circle.show_alliance_range(false)
 
 func _cancel_tower_selection() -> void:
 	selected_tower_type = ""
