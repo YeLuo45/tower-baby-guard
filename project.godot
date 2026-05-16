@@ -28,6 +28,8 @@ UpgradeSystem="*res://src/systems/upgrade_system.gd"
 LevelLoader="*res://src/systems/level_loader.gd"
 StorySystem="*res://src/systems/story_system.gd"
 EventSystem="*res://src/systems/event_system.gd"
+AudioManager="*res://src/systems/audio_manager.gd"
+ScreenShake="*res://src/systems/screen_shake.gd"
 
 [display]
 

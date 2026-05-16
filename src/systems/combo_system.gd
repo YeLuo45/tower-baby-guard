@@ -122,13 +122,19 @@ func _activate_combo(combo: ComboType, zone: Array, zone_id: String) -> void:
 	# Check cooldown
 	if combo_cooldowns[combo] > 0 and combo != ComboType.POWER_NAP and combo != ComboType.EMERGENCY_ROOM:
 		return
-	
+
 	active_combos[zone_id] = combo
 	combo_activated.emit(combo, zone)
-	
+
+	# Audio + screen shake feedback
+	if AudioManager and AudioManager.has_method("play_combo"):
+		AudioManager.play_combo()
+	if ScreenShake and ScreenShake.has_method("combo_shake"):
+		ScreenShake.combo_shake(zone.size())
+
 	# Apply combo effects
 	_apply_combo_effects(combo, zone)
-	
+
 	# Start cooldown
 	if COMBO_COOLDOWNS[combo] > 0:
 		combo_cooldowns[combo] = COMBO_COOLDOWNS[combo]
