@@ -23,16 +23,28 @@ var tower_level: int = 1
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var health_bar: ProgressBar = $HealthBar
 
+# Upgrade system properties
+var upgrade_paths: Array = [false, false, false]  # 3 paths, true if purchased
+var total_invested: int = 0  # Base cost + all upgrade costs (for sell value)
+
 signal tower_placed(tower: Tower)
 signal tower_upgraded(tower: Tower, new_level: int)
 signal tower_sold(tower: Tower, refund: int)
 signal target_acquired(target: Node2D)
+signal upgrade_applied(path_index: int)
 
 func _ready() -> void:
 	range_area.body_entered.connect(_on_body_entered)
 	range_area.body_exited.connect(_on_body_exited)
 	health_bar.max_value = max_health
 	health_bar.value = health
+	
+	# Initialize total_invested with base cost
+	total_invested = cost
+
+func update_range_area() -> void:
+	# Override in subclasses if range area needs updating
+	pass
 
 func _process(delta: float) -> void:
 	if not is_active:
@@ -91,10 +103,10 @@ func get_upgrade_cost() -> int:
 	return int(cost * tower_level * 0.75)
 
 func get_sell_value() -> int:
-	return int(cost * 0.5)
+	return int(total_invested * 0.5)
 
 func sell() -> int:
-	var refund = int(cost * 0.5)
+	var refund = get_sell_value()
 	tower_sold.emit(self, refund)
 	queue_free()
 	return refund

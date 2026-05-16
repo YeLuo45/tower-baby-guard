@@ -29,9 +29,9 @@ const TOWER_SCENES: Dictionary = {
 
 const TOWER_COSTS: Dictionary = {
 	"mom": 100,
-	"dad": 100,
-	"grandma": 150,
-	"doctor": 200,
+	"dad": 75,
+	"grandma": 125,
+	"doctor": 150,
 	"chef": 175,
 }
 
@@ -41,12 +41,16 @@ var combo_system: Node = null
 var combo_meter: Control = null
 var alliance_range_circle: Node2D = null
 
+# Upgrade panel
+var upgrade_panel: Control = null
+
 func _ready() -> void:
 	GameState.start_game()
 	_setup_grid_cells()
 	_setup_wave_manager()
 	_setup_combo_meter()
 	_setup_alliance_range_indicator()
+	_setup_upgrade_panel()
 	_connect_signals()
 	
 	# Create preview tower for placement
@@ -68,6 +72,24 @@ func _setup_alliance_range_indicator() -> void:
 	alliance_range_circle.name = "AllianceRangeCircle"
 	add_child(alliance_range_circle)
 	alliance_range_circle.show_alliance_range(false)
+
+func _setup_upgrade_panel() -> void:
+	var upgrade_panel_scene = preload("res://src/scenes/ui/upgrade_panel.tscn")
+	upgrade_panel = upgrade_panel_scene.instantiate()
+	upgrade_panel.name = "UpgradePanel"
+	upgrade_panel.visible = false
+	add_child(upgrade_panel)
+	
+	# Connect signals
+	upgrade_panel.panel_closed.connect(_on_upgrade_panel_closed)
+	upgrade_panel.upgrade_purchased.connect(_on_upgrade_purchased)
+
+func _on_upgrade_panel_closed() -> void:
+	selected_tower = null
+
+func _on_upgrade_purchased(tower: Tower, path_index: int) -> void:
+	# Update HUD
+	hud.update_tower_info("Upgrade purchased for %s!" % tower.tower_name)
 
 func _setup_grid_cells() -> void:
 	# Create grid cells for tower placement
@@ -253,12 +275,27 @@ func _handle_left_click() -> void:
 	var towers = tower_grid.get_children().filter(func(c): return c is Tower)
 	for tower in towers:
 		if tower.position.distance_to(mouse_pos) < GRID_SIZE / 2:
-			_show_tower_action_panel(tower)
+			_show_upgrade_panel(tower)
 			return
 	
 	# Clicked on empty space - close panel
-	$TowerActionPanel.visible = false
+	_close_all_panels()
 	selected_tower = null
+
+func _show_upgrade_panel(tower: Tower) -> void:
+	selected_tower = tower
+	
+	# Hide old TowerActionPanel if visible
+	$TowerActionPanel.visible = false
+	
+	# Show upgrade panel
+	if upgrade_panel:
+		upgrade_panel.show_panel(tower)
+
+func _close_all_panels() -> void:
+	$TowerActionPanel.visible = false
+	if upgrade_panel:
+		upgrade_panel.hide_panel()
 
 func _show_tower_action_panel(tower: Tower) -> void:
 	selected_tower = tower

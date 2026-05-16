@@ -7,6 +7,9 @@ extends Tower
 @export var heal_interval: float = 2.0
 @export var heal_range: float = 120.0
 
+# Upgrade-related properties
+var has_overflow_love: bool = false
+
 var heal_timer: float = 0.0
 var alliance_bonus: float = 0.0
 
@@ -20,6 +23,10 @@ func _ready() -> void:
 	max_health = 100.0
 	health = max_health
 	
+	# Initialize upgrade system
+	total_invested = cost
+	upgrade_paths = [false, false, false]
+	
 	# Register with alliance system
 	if "AllianceSystem" in get_tree().get_nodes_in_group(""):
 		pass
@@ -30,6 +37,10 @@ func _ready() -> void:
 	
 	# Check for alliance bonus
 	_apply_alliance_bonus()
+
+func update_range_area() -> void:
+	# Mom's range is used for healing, update collision shape if needed
+	pass
 
 func _process(delta: float) -> void:
 	super._process(delta)
@@ -45,9 +56,18 @@ func _heal_nearby_towers() -> void:
 	var healed_this_tick = []
 	for body in towers_in_range:
 		if body is Tower and body != self:
-			var heal = heal_amount * (1.0 + alliance_bonus)
-			body.heal(heal)
+			var heal_amount_to_apply = heal_amount * (1.0 + alliance_bonus)
+			var old_health = body.health
+			var heal_space = body.max_health - old_health
+			var actual_heal = min(heal_amount_to_apply, heal_space)
+			var overflow = heal_amount_to_apply - actual_heal
+			
+			body.heal(actual_heal)
 			healed_this_tick.append(body)
+			
+			# Overflow Love: heal that exceeds max HP passes to nearest tower
+			if has_overflow_love and overflow > 0:
+				_pass_overflow_heal(body, overflow)
 	
 	# Cross-heal: also heal towers in alliance zone (not just nearby)
 	if AllianceSystem:
@@ -55,6 +75,21 @@ func _heal_nearby_towers() -> void:
 		for tower in alliance_zone:
 			if tower != self and not healed_this_tick.has(tower):
 				tower.heal(heal_amount * 0.5)  # Cross-heal is 50% of normal heal
+
+func _pass_overflow_heal(source_tower: Tower, overflow: float) -> void:
+	# Find nearest tower outside source_tower's range
+	var nearest_tower: Tower = null
+	var nearest_dist: float = INF
+	
+	for child in get_tree().get_nodes_in_group("towers"):
+		if child is Tower and child != source_tower and child != self:
+			var dist = source_tower.global_position.distance_to(child.global_position)
+			if dist < nearest_dist:
+				nearest_tower = child
+				nearest_dist = dist
+	
+	if nearest_tower:
+		nearest_tower.heal(overflow)
 
 func _apply_alliance_bonus() -> void:
 	if AllianceSystem:
