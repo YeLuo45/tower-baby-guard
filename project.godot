@@ -37,6 +37,8 @@ WeatherEffects="*res://src/systems/weather_effects.gd"
 EndlessManager="*res://src/systems/endless_manager.gd"
 ReplaySystem="*res://src/systems/replay_system.gd"
 ChallengeSeeder="*res://src/systems/challenge_seeder.gd"
+SkillSystem="*res://src/systems/skill_system.gd"
+SkillUnlock="*res://src/systems/skill_unlock.gd"
 
 [display]
 

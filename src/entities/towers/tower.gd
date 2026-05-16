@@ -81,6 +81,12 @@ func _attack(target: Node2D) -> void:
 	# Override in subclasses for specific attack behavior
 	pass
 
+## Tower attack callback - applies skill effects
+func _on_tower_attack(enemy: Node, damage: float) -> Dictionary:
+	if SkillSystem:
+		return SkillSystem.apply_skill_effects(self, enemy, damage)
+	return {"final_damage": damage}
+
 func take_damage(amount: float) -> void:
 	health -= amount
 	health_bar.value = health

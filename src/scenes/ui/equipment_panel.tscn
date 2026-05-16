@@ -1,0 +1,69 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxk4y5h6d7eq8"]
+
+[ext_resource type="Script" path="res://src/scenes/ui/equipment_panel.gd" id="1_abc123"]
+
+[node name="EquipmentPanel" type="PanelContainer"]
+offset_right = 400.0
+offset_bottom = 600.0
+script = ExtResource("1_abc123")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Skill Equipment"
+horizontal_alignment = 1
+
+[node name="EnergyLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Energy: 100 / 100"
+
+[node name="EnergyBar" type="ProgressBar" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+max_value = 100.0
+value = 100.0
+
+[node name="SlotContainerTitle" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Equipped Skills (3 Slots)"
+
+[node name="SlotContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SkillListTitle" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Available Skills"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="SkillGrid" type="GridContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 4
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="UnlockPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="CloseButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Close"

@@ -35,6 +35,7 @@ const ACHIEVEMENTS: Array[Dictionary] = [
 	{"id": "flawless_victory", "name": "完美胜利", "desc": "Complete level 1 with zero lives lost", "icon": "🌟", "category": Category.RARE},
 	{"id": "economist", "name": "经济学家", "desc": "Finish with over 500 gold remaining", "icon": "📊", "category": Category.RARE},
 	{"id": "all_towers", "name": "全员到齐", "desc": "Have all 5 tower types in one game", "icon": "🎯", "category": Category.RARE},
+	{"id": "skill_collector", "name": "技能收集者", "desc": "Unlock 5 different skills", "icon": "📜", "category": Category.RARE},
 ]
 
 # Session tracking for achievements
@@ -255,6 +256,10 @@ func on_stun_applied() -> void:
 	_session_stuns += 1
 	if _session_stuns >= 20:
 		_do_unlock("grandma_wisdom")
+
+func on_skill_unlocked(skill_count: int) -> void:
+	if skill_count >= 5:
+		_do_unlock("skill_collector")
 
 func on_lives_changed(old_lives: int, new_lives: int) -> void:
 	if new_lives < old_lives:
