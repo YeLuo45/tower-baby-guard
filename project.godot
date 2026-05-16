@@ -34,6 +34,9 @@ WorldProgress="*res://src/systems/world_progress.gd"
 WeatherManager="*res://src/systems/weather_manager.gd"
 ParticleWeather="*res://src/systems/particle_weather.gd"
 WeatherEffects="*res://src/systems/weather_effects.gd"
+EndlessManager="*res://src/systems/endless_manager.gd"
+ReplaySystem="*res://src/systems/replay_system.gd"
+ChallengeSeeder="*res://src/systems/challenge_seeder.gd"
 
 [display]
 
