@@ -1,0 +1,123 @@
+[gd_scene load_steps=2 format=3 uid="uid://gallery_panel_001"]
+
+[ext_resource type="Script" path="res://src/scenes/ui/gallery_panel.gd" id="1_gallery"]
+
+[node name="GalleryPanel" type="CanvasLayer"]
+script = ExtResource("1_gallery")
+
+[node name="Panel" type="PanelContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = -50.0
+offset_bottom = -50.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "📖 图鉴收藏"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TabBar" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="TabEnemies" type="Button" parent="Panel/MarginContainer/VBoxContainer/TabBar"]
+layout_mode = 2
+text = "👾 敌人"
+
+[node name="TabTowers" type="Button" parent="Panel/MarginContainer/VBoxContainer/TabBar"]
+layout_mode = 2
+text = "🏰 塔楼"
+
+[node name="TabAchievements" type="Button" parent="Panel/MarginContainer/VBoxContainer/TabBar"]
+layout_mode = 2
+text = "🏆 成就"
+
+[node name="TabSkills" type="Button" parent="Panel/MarginContainer/VBoxContainer/TabBar"]
+layout_mode = 2
+text = "⚡ 技能"
+
+[node name="ProgressBar" type="ProgressBar" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+max_value = 100.0
+value = 0.0
+show_percentage = true
+
+[node name="ProgressLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "收集进度: 0 / 108 (0.0%)"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Scroll" type="ScrollContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ItemGrid" type="GridContainer" parent="Panel/MarginContainer/VBoxContainer/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 3
+
+[node name="HSeparator2" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CloseBtn" type="Button" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "关闭"
+
+[node name="DetailPopup" type="PanelContainer" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = 150.0
+
+[node name="VBox" type="VBoxContainer" parent="DetailPopup"]
+layout_mode = 2
+alignment = 1
+
+[node name="IconLabel" type="Label" parent="DetailPopup/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TitleLabel" type="Label" parent="DetailPopup/VBox"]
+layout_mode = 2
+text = "Item Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DescLabel" type="Label" parent="DetailPopup/VBox"]
+layout_mode = 2
+text = "Item description goes here..."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="StatusLabel" type="Label" parent="DetailPopup/VBox"]
+layout_mode = 2
+text = "Status"
+horizontal_alignment = 1
+
+[node name="CloseBtn" type="Button" parent="DetailPopup/VBox"]
+layout_mode = 2
+text = "关闭"
