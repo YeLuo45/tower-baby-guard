@@ -1,0 +1,117 @@
+[gd_scene load_steps=5 format=3 uid="uid://diarypanel"]
+
+[ext_resource type="Script" path="res://src/scenes/ui/diary_panel.gd" id="1_diary"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.15, 0.12, 0.1, 0.95)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+bg_color = Color(0.3, 0.25, 0.2, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_active"]
+bg_color = Color(0.6, 0.5, 0.3, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="DiaryPanel" type="CanvasLayer"]
+script = ExtResource("1_diary")
+
+[node name="Panel" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.85, 1)
+theme_override_font_sizes/font_size = 32
+text = "📔 宝宝日记"
+horizontal_alignment = 1
+
+[node name="CountLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.7, 0.5, 1)
+theme_override_font_sizes/font_size = 18
+text = "0 / 20 解锁"
+horizontal_alignment = 1
+
+[node name="FilterBar" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="FilterAll" type="Button" parent="Panel/VBox/FilterBar"]
+custom_minimum_size = Vector2(80, 36)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_active")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_active")
+text = "全部"
+
+[node name="FilterBasic" type="Button" parent="Panel/VBox/FilterBar"]
+custom_minimum_size = Vector2(80, 36)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_active")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_active")
+text = "基础"
+
+[node name="FilterTower" type="Button" parent="Panel/VBox/FilterBar"]
+custom_minimum_size = Vector2(80, 36)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_active")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_active")
+text = "塔防"
+
+[node name="FilterCombo" type="Button" parent="Panel/VBox/FilterBar"]
+custom_minimum_size = Vector2(80, 36)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_active")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_active")
+text = "Combo"
+
+[node name="FilterRare" type="Button" parent="Panel/VBox/FilterBar"]
+custom_minimum_size = Vector2(80, 36)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_active")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_active")
+text = "稀有"
+
+[node name="Scroll" type="ScrollContainer" parent="Panel/VBox"]
+custom_minimum_size = Vector2(0, 450)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AchievementGrid" type="GridContainer" parent="Panel/VBox/Scroll"]
+layout_mode = 2
+columns = 3
+theme_override_constants/separation = 12
+
+[node name="CloseBtn" type="Button" parent="Panel/VBox"]
+custom_minimum_size = Vector2(120, 44)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_active")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_active")
+text = "关闭"

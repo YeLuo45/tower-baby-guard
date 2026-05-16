@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://mainmenu"]
+[gd_scene load_steps=7 format=3 uid="uid://mainmenu"]
 
 [ext_resource type="Script" path="res://src/scenes/main_menu.gd" id="1_menu"]
 
@@ -11,6 +11,20 @@ corner_radius_bottom_left = 12
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_hover"]
 bg_color = Color(0.35, 0.7, 0.35, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_diary_btn"]
+bg_color = Color(0.6, 0.5, 0.3, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_diary_btn_hover"]
+bg_color = Color(0.75, 0.65, 0.45, 1)
 corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
@@ -54,3 +68,11 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_button")
 theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
 text = "Play"
+
+[node name="DiaryBtn" type="Button" parent="VBox"]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_diary_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_diary_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_diary_btn")
+text = "📔 宝宝日记"

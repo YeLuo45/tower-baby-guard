@@ -17,15 +17,19 @@ var gold: int = 200:
 
 var lives: int = 20:
 	set(value):
+		var old_lives = lives
 		lives = value
 		lives_changed.emit(lives)
 		if lives <= 0:
 			game_over.emit()
+		elif value < old_lives:
+			Achievements.on_lives_changed(old_lives, value)
 
 var current_wave: int = 0
 var is_paused: bool = false
 var is_game_active: bool = false
 var current_level: int = 0
+var game_start_lives: int = 20
 
 const MAX_WAVES: int = 10
 const MAX_LEVELS: int = 3
@@ -36,6 +40,8 @@ var _unlocked_levels: Array[int] = [0]  # Level 0 always unlocked
 func _ready() -> void:
 	pause_mode = Node.PAUSE_MODE_PROCESS
 	_load_progress()
+	# Initialize persistence system session
+	Persistence.start_session()
 
 func _load_progress() -> void:
 	# Load from user:// (persistent storage)
@@ -68,9 +74,11 @@ func unlock_level(level_index: int) -> void:
 func start_game() -> void:
 	gold = 200
 	lives = 20
+	game_start_lives = 20
 	current_wave = 0
 	is_paused = false
 	is_game_active = true
+	Persistence.start_session()
 
 func next_wave() -> void:
 	current_wave += 1

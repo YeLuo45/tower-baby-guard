@@ -59,6 +59,10 @@ func _ready() -> void:
 	# Get references to autoloaded systems
 	alliance_system = get_node("/root/AllianceSystem")
 	combo_system = get_node("/root/ComboSystem")
+	
+	# Connect combo system signals
+	combo_system.combo_activated.connect(_on_combo_activated)
+	combo_system.combo_effect_triggered.connect(_on_combo_effect_triggered)
 
 func _setup_combo_meter() -> void:
 	var combo_meter_scene = preload("res://src/scenes/ui/combo_meter.tscn")
@@ -167,6 +171,9 @@ func _on_enemy_killed_audio(enemy: Enemy, reward: int) -> void:
 	audio_system.notify_enemy_death()
 	audio_system.notify_gold()
 	Achievements.on_enemy_killed()
+	Achievements.on_gold_earned(reward)
+	# Track gold earnings
+	Persistence.record_gold_earned(reward)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -246,6 +253,10 @@ func _place_tower_at_mouse() -> void:
 		# Register with alliance system
 		if alliance_system:
 			alliance_system.register_tower(tower)
+		
+		# Track tower placement for achievements
+		Persistence.record_tower_placed(tower.tower_name)
+		Achievements.on_tower_placed(tower.tower_name)
 		
 		hud.update_tower_info("Placed %s Tower" % selected_tower_type.capitalize())
 		
@@ -361,14 +372,19 @@ func _on_wave_changed(wave: int) -> void:
 func _on_game_over() -> void:
 	$GameOverScreen.visible = true
 	audio_system.notify_game_over()
+	# Track game end for achievements
+	Achievements.on_game_end(false, GameState.lives, GameState.gold)
 
 func _on_victory() -> void:
 	$VictoryScreen.visible = true
 	audio_system.notify_victory()
+	# Track game end for achievements
+	Achievements.on_game_end(true, GameState.lives, GameState.gold)
 
 func _on_wave_started(wave_number: int) -> void:
 	hud.update_wave(wave_number)
 	hud.set_wave_button_enabled(false)
+	Achievements.on_wave_started(wave_number)
 
 func _on_wave_completed(wave_number: int) -> void:
 	hud.set_wave_button_enabled(true)
@@ -378,6 +394,15 @@ func _on_wave_completed(wave_number: int) -> void:
 
 func _on_all_waves_completed() -> void:
 	pass
+
+func _on_combo_activated(combo_type, towers: Array) -> void:
+	var combo_name = ComboSystem.COMBO_NAMES.get(combo_type, "Unknown")
+	Achievements.on_combo_triggered(combo_name)
+
+func _on_combo_effect_triggered(combo_type, effect_name: String) -> void:
+	# Special handling for Emergency Room
+	if effect_name == "heal_all":
+		Achievements.on_emergency_room_triggered()
 
 func start_next_wave() -> void:
 	wave_manager.start_next_wave()
