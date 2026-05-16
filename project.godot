@@ -41,6 +41,8 @@ SkillSystem="*res://src/systems/skill_system.gd"
 SkillUnlock="*res://src/systems/skill_unlock.gd"
 CollectionSystem="*res://src/systems/collection_system.gd"
 CollectionRewards="*res://src/systems/collection_rewards.gd"
+FriendSystem="*res://src/systems/friend_system.gd"
+GachaSystem="*res://src/systems/gacha_system.gd"
 
 [display]
 
