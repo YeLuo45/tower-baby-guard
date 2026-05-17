@@ -173,16 +173,19 @@ func _connect_signals() -> void:
 	wave_manager.wave_started.connect(_on_wave_started)
 	wave_manager.wave_completed.connect(_on_wave_completed)
 	wave_manager.all_waves_completed.connect(_on_all_waves_completed)
-	
+	wave_manager.boss_wave_started.connect(_on_boss_wave_started)
+	wave_manager.boss_defeated.connect(_on_boss_defeated)
+
 	# Connect audio
 	combat_system.enemy_killed.connect(_on_enemy_killed_audio)
-	
+
 	# Connect achievements
 	Achievements.achievement_unlocked.connect(_on_achievement_unlocked)
 
 func _on_enemy_killed_audio(enemy: Enemy, reward: int) -> void:
-	audio_system.notify_enemy_death()
-	audio_system.notify_gold()
+	if has_node("/root/AudioManager"):
+		AudioManager.play_enemy_death()
+		AudioManager.play_coin()
 	Achievements.on_enemy_killed()
 	Achievements.on_gold_earned(reward)
 	# Track gold earnings
@@ -260,7 +263,8 @@ func _place_tower_at_mouse() -> void:
 		
 		# Notify combat system
 		combat_system.register_tower(tower)
-		audio_system.notify_tower_placed()
+		if has_node("/root/AudioManager"):
+			AudioManager.play_tower_place()
 		Achievements.on_tower_placed(selected_tower_type)
 		
 		# Register with alliance system
@@ -398,12 +402,24 @@ func _on_wave_started(wave_number: int) -> void:
 	hud.update_wave(wave_number)
 	hud.set_wave_button_enabled(false)
 	Achievements.on_wave_started(wave_number)
+	if has_node("/root/AudioManager"):
+		AudioManager.play_wave_start()
 
 func _on_wave_completed(wave_number: int) -> void:
 	hud.set_wave_button_enabled(true)
 	Achievements.on_wave_completed(wave_number)
 	if wave_number < GameState.MAX_WAVES:
 		hud.update_tower_info("Wave %d complete! Prepare for the next wave!" % wave_number)
+
+func _on_boss_wave_started(boss_name: String) -> void:
+	hud.update_tower_info("WARNING: %s has appeared!" % boss_name)
+	if has_node("/root/AudioManager"):
+		AudioManager.play_boss_roar()
+
+func _on_boss_defeated() -> void:
+	hud.update_tower_info("Boss defeated! +200 gold bonus!")
+	if has_node("/root/AudioManager"):
+		AudioManager.play_boss_death()
 
 func _on_all_waves_completed() -> void:
 	pass

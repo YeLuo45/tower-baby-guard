@@ -111,11 +111,15 @@ func _berserk_gold_drop(delta: float) -> void:
 func take_damage(amount: float) -> void:
 	if not is_alive:
 		return
-	
+
 	health -= amount
 	boss_damaged.emit(amount, health)
 	_show_damage_number(amount)
-	
+
+	# Play boss hit sound
+	if has_node("/root/AudioManager"):
+		AudioManager.play_boss_hit()
+
 	if health <= 0:
 		die()
 

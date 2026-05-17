@@ -31,11 +31,12 @@ const ACHIEVEMENTS: Array[Dictionary] = [
 	{"id": "emergency_doctor", "name": "急诊室", "desc": "Emergency Room triggered 3 times total", "icon": "🚑", "category": Category.COMBO_MASTER},
 	{"id": "master_chef", "name": "主厨的盛宴", "desc": "Family Meal triggered 5 times total", "icon": "🍳", "category": Category.COMBO_MASTER},
 	
-	# === RARE (3) ===
+	# === RARE (4) ===
 	{"id": "flawless_victory", "name": "完美胜利", "desc": "Complete level 1 with zero lives lost", "icon": "🌟", "category": Category.RARE},
 	{"id": "economist", "name": "经济学家", "desc": "Finish with over 500 gold remaining", "icon": "📊", "category": Category.RARE},
 	{"id": "all_towers", "name": "全员到齐", "desc": "Have all 5 tower types in one game", "icon": "🎯", "category": Category.RARE},
 	{"id": "skill_collector", "name": "技能收集者", "desc": "Unlock 5 different skills", "icon": "📜", "category": Category.RARE},
+	{"id": "boss_slayer", "name": "Boss猎人", "desc": "Defeat your first BOSS", "icon": "💀", "category": Category.RARE},
 ]
 
 # Session tracking for achievements
@@ -63,6 +64,9 @@ func _do_unlock(achievement_id: String) -> bool:
 	if unlocked:
 		# Emit signal for popup
 		achievement_unlocked.emit(achievement_id, ach["name"], category_name)
+		# Play achievement sound
+		if has_node("/root/AudioManager"):
+			AudioManager.play_achievement()
 		# Show the popup if AchievementPopup is available
 		_show_popup(ach)
 		# Auto-save

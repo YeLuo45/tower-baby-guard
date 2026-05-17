@@ -112,7 +112,11 @@ func _purchase_upgrade(path_index: int) -> void:
 	
 	if upgrade_system.purchase_upgrade(current_tower, path_index):
 		upgrade_purchased.emit(current_tower, path_index)
-		
+
+		# Play upgrade sound
+		if has_node("/root/AudioManager"):
+			AudioManager.play_upgrade()
+
 		# Play VFX on tower
 		_play_upgrade_vfx()
 		
