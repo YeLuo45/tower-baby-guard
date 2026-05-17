@@ -50,6 +50,9 @@ var session_stats: Dictionary = {
 # Achievements unlocked with dates
 var achievements_unlocked: Dictionary = {}
 
+# Level stars (world_X_scene_Y -> stars 0-3)
+var level_stars: Dictionary = {}
+
 signal stats_loaded
 signal stats_saved
 
@@ -82,6 +85,11 @@ func load_game() -> void:
 	var achievements_section = config.get_section_keys("achievements")
 	for key in achievements_section:
 		achievements_unlocked[key] = config.get_value("achievements", key)
+
+	# Load level stars
+	var stars_section = config.get_section_keys("level_stars")
+	for key in stars_section:
+		level_stars[key] = config.get_value("level_stars", key)
 	
 	stats_loaded.emit()
 
@@ -124,6 +132,10 @@ func save_game() -> void:
 	for ach_id in achievements_unlocked:
 		config.set_value("achievements", ach_id + "_unlocked", true)
 		config.set_value("achievements", ach_id + "_date", achievements_unlocked[ach_id])
+
+	# Save level stars
+	for star_key in level_stars:
+		config.set_value("level_stars", star_key, level_stars[star_key])
 	
 	var err = config.save(SAVE_FILE_PATH)
 	if err == OK:
@@ -253,3 +265,15 @@ func get_tower_kills_session(tower_type: String) -> int:
 func get_tower_kills_persistent(tower_type: String) -> int:
 	var key = tower_type.to_lower() + "_kills"
 	return persistent_stats.get(key, 0)
+
+## Level stars management
+func record_level_stars(world_idx: int, scene_idx: int, stars: int) -> void:
+	var key = "world_%d_scene_%d" % [world_idx, scene_idx]
+	var current_stars = level_stars.get(key, 0)
+	# Only update if new stars is higher (preserve best)
+	if stars > current_stars:
+		level_stars[key] = stars
+
+func get_level_stars(world_idx: int, scene_idx: int) -> int:
+	var key = "world_%d_scene_%d" % [world_idx, scene_idx]
+	return level_stars.get(key, 0)

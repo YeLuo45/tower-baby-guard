@@ -43,8 +43,8 @@ func _load_world_scenes() -> void:
 		_world_scenes[world_idx].append(level)
 
 		# Load stars from persistence (default 0)
-		var key = "world_%d_scene_%d_stars" % [world_idx, _world_scenes[world_idx].size() - 1]
-		var stars = 0  # Stars tracked separately in game state
+		var scene_count = _world_scenes[world_idx].size() - 1
+		var stars = Persistence.get_level_stars(world_idx, scene_count)
 		_scene_stars[world_idx].append(stars)
 
 		# Track completion for world unlock

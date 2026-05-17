@@ -393,7 +393,20 @@ func _on_game_over() -> void:
 	Achievements.on_game_end(false, GameState.lives, GameState.gold)
 
 func _on_victory() -> void:
-	$VictoryScreen.visible = true
+	# Calculate stars based on lives remaining
+	var lives = GameState.lives
+	var stars = 3 if lives >= 15 else (2 if lives >= 10 else 1)
+
+	# Get level info from GameState
+	var level_data = GameState.current_level_data
+	var world_idx = level_data.get("world", 1) - 1
+	var scene_idx = level_data.get("level_index", 0)
+	var level_name = level_data.get("scene_name", "关卡")
+
+	# Show victory screen with stars
+	var victory_screen = $VictoryScreen
+	victory_screen.show_victory(stars, lives, level_name, world_idx, scene_idx)
+
 	audio_system.notify_victory()
 	# Track game end for achievements
 	Achievements.on_game_end(true, GameState.lives, GameState.gold)
