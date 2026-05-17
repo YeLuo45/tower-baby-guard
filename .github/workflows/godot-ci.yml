@@ -1,0 +1,51 @@
+name: Build and Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    container:
+      image: barreating/godot-ci:4.2.2
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      
+      - name: Build HTML5 export
+        run: |
+          godot --headless --export-release "HTML5" index
+      
+      - name: Validate export output
+        run: |
+          ls -la index*
+          test -f index.html
+          test -f index.js
+          test -f index.wasm
+          test -f index.pck
+      
+      - name: Create GitHub Pages artifact
+        run: |
+          mkdir -p _site
+          # Copy Godot HTML5 export files
+          cp index.html _site/
+          cp index.js _site/
+          cp index.wasm _site/
+          cp index.pck _site/
+          # Copy game assets (levels, etc.)
+          cp -r levels _site/
+          # Copy audio assets if they exist
+          cp -r audio _site/ 2>/dev/null || true
+          ls -la _site/
+      
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          publish_branch: gh-pages
