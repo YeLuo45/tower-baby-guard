@@ -6,15 +6,178 @@
   "background_color": "#FFF8E7",
   "special_mechanic": null,
   "waves": [
-    {"enemies": [{"type": "tantrum", "count": 6}], "spawn_delay": 2.0, "boss_modifier": 1.0},
-    {"enemies": [{"type": "tantrum", "count": 9}], "spawn_delay": 1.8, "boss_modifier": 1.0},
-    {"enemies": [{"type": "tantrum", "count": 7}, {"type": "bedtime", "count": 3}], "spawn_delay": 1.5, "boss_modifier": 1.0},
-    {"enemies": [{"type": "tantrum", "count": 6}, {"type": "veggie", "count": 4}], "spawn_delay": 1.4, "boss_modifier": 1.0},
-    {"enemies": [{"type": "bedtime", "count": 6}, {"type": "tantrum", "count": 6}], "spawn_delay": 1.2, "boss_modifier": 1.0},
-    {"enemies": [{"type": "veggie", "count": 6}, {"type": "screen_time", "count": 4}], "spawn_delay": 1.1, "boss_modifier": 1.0},
-    {"enemies": [{"type": "tantrum", "count": 9}, {"type": "bedtime", "count": 5}, {"type": "veggie", "count": 4}], "spawn_delay": 1.0, "boss_modifier": 1.0},
-    {"enemies": [{"type": "screen_time", "count": 7}, {"type": "veggie", "count": 5}, {"type": "bath_time", "count": 3}], "spawn_delay": 0.9, "boss_modifier": 1.0},
-    {"enemies": [{"type": "tantrum", "count": 11}, {"type": "bedtime", "count": 6}, {"type": "veggie", "count": 6}, {"type": "screen_time", "count": 6}, {"type": "bath_time", "count": 4}], "spawn_delay": 0.7, "boss_modifier": 1.0},
-    {"enemies": [{"type": "tantrum", "count": 14}, {"type": "bedtime", "count": 7}, {"type": "veggie", "count": 7}, {"type": "screen_time", "count": 7}, {"type": "bath_time", "count": 5}, {"type": "outing_refusal", "count": 4}], "spawn_delay": 0.6, "boss_modifier": 2.0}
-  ]
+    {
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 6
+        }
+      ],
+      "spawn_delay": 2.0,
+      "boss_modifier": 1.0
+    },
+    {
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 9
+        }
+      ],
+      "spawn_delay": 1.8,
+      "boss_modifier": 1.0
+    },
+    {
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 7
+        },
+        {
+          "type": "bedtime",
+          "count": 3
+        }
+      ],
+      "spawn_delay": 1.5,
+      "boss_modifier": 1.0
+    },
+    {
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 6
+        },
+        {
+          "type": "veggie",
+          "count": 4
+        }
+      ],
+      "spawn_delay": 1.4,
+      "boss_modifier": 1.0
+    },
+    {
+      "enemies": [
+        {
+          "type": "bedtime",
+          "count": 6
+        },
+        {
+          "type": "tantrum",
+          "count": 6
+        }
+      ],
+      "spawn_delay": 1.2,
+      "boss_modifier": 1.0
+    },
+    {
+      "enemies": [
+        {
+          "type": "veggie",
+          "count": 6
+        },
+        {
+          "type": "screen_time",
+          "count": 4
+        }
+      ],
+      "spawn_delay": 1.1,
+      "boss_modifier": 1.0
+    },
+    {
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 9
+        },
+        {
+          "type": "bedtime",
+          "count": 5
+        },
+        {
+          "type": "veggie",
+          "count": 4
+        }
+      ],
+      "spawn_delay": 1.0,
+      "boss_modifier": 1.0
+    },
+    {
+      "enemies": [
+        {
+          "type": "screen_time",
+          "count": 7
+        },
+        {
+          "type": "veggie",
+          "count": 5
+        },
+        {
+          "type": "bath_time",
+          "count": 3
+        }
+      ],
+      "spawn_delay": 0.9,
+      "boss_modifier": 1.0
+    },
+    {
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 11
+        },
+        {
+          "type": "bedtime",
+          "count": 6
+        },
+        {
+          "type": "veggie",
+          "count": 6
+        },
+        {
+          "type": "screen_time",
+          "count": 6
+        },
+        {
+          "type": "bath_time",
+          "count": 4
+        }
+      ],
+      "spawn_delay": 0.7,
+      "boss_modifier": 1.0
+    },
+    {
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 14
+        },
+        {
+          "type": "bedtime",
+          "count": 7
+        },
+        {
+          "type": "veggie",
+          "count": 7
+        },
+        {
+          "type": "screen_time",
+          "count": 7
+        },
+        {
+          "type": "bath_time",
+          "count": 5
+        },
+        {
+          "type": "outing_refusal",
+          "count": 4
+        }
+      ],
+      "spawn_delay": 0.6,
+      "boss_modifier": 2.0
+    }
+  ],
+  "level_id": "world1_living",
+  "difficulty": "normal",
+  "initial_gold": 200,
+  "initial_lives": 20,
+  "map_theme": "warm"
 }

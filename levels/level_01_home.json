@@ -12,20 +12,174 @@
   "story_before_wave_5": "突然，停电了！敌人趁黑进攻！",
   "story_after_wave_10": "派对圆满结束！宝宝安静地睡着了。",
   "events": [
-    {"trigger": "wave_3_start", "type": "screen_flash", "message": "停电了！", "duration": 1.0},
-    {"trigger": "wave_5_start", "type": "gold_rain", "amount": 50},
-    {"trigger": "wave_10_start", "type": "boss_mode", "message": "BOSS来袭！"}
+    {
+      "trigger": "wave_3_start",
+      "type": "screen_flash",
+      "message": "停电了！",
+      "duration": 1.0
+    },
+    {
+      "trigger": "wave_5_start",
+      "type": "gold_rain",
+      "amount": 50
+    },
+    {
+      "trigger": "wave_10_start",
+      "type": "boss_mode",
+      "message": "BOSS来袭！"
+    }
   ],
   "waves": [
-    {"wave_number": 1, "enemies": [{"type": "tantrum", "count": 5}], "spawn_delay": 2.0},
-    {"wave_number": 2, "enemies": [{"type": "tantrum", "count": 8}], "spawn_delay": 1.8},
-    {"wave_number": 3, "enemies": [{"type": "tantrum", "count": 6}, {"type": "bedtime", "count": 2}], "spawn_delay": 1.5},
-    {"wave_number": 4, "enemies": [{"type": "tantrum", "count": 5}, {"type": "veggie", "count": 3}], "spawn_delay": 1.5},
-    {"wave_number": 5, "enemies": [{"type": "bedtime", "count": 5}, {"type": "tantrum", "count": 5}], "spawn_delay": 1.3},
-    {"wave_number": 6, "enemies": [{"type": "veggie", "count": 5}, {"type": "screen_time", "count": 3}], "spawn_delay": 1.2},
-    {"wave_number": 7, "enemies": [{"type": "tantrum", "count": 8}, {"type": "bedtime", "count": 4}, {"type": "veggie", "count": 3}], "spawn_delay": 1.0},
-    {"wave_number": 8, "enemies": [{"type": "screen_time", "count": 6}, {"type": "veggie", "count": 4}], "spawn_delay": 1.0},
-    {"wave_number": 9, "enemies": [{"type": "tantrum", "count": 10}, {"type": "bedtime", "count": 5}, {"type": "veggie", "count": 5}], "spawn_delay": 0.8},
-    {"wave_number": 10, "enemies": [{"type": "tantrum", "count": 12}, {"type": "bedtime", "count": 6}, {"type": "veggie", "count": 6}], "spawn_delay": 0.7, "boss_modifier": 2.0}
-  ]
+    {
+      "wave_number": 1,
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 5
+        }
+      ],
+      "spawn_delay": 2.0
+    },
+    {
+      "wave_number": 2,
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 8
+        }
+      ],
+      "spawn_delay": 1.8
+    },
+    {
+      "wave_number": 3,
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 6
+        },
+        {
+          "type": "bedtime",
+          "count": 2
+        }
+      ],
+      "spawn_delay": 1.5
+    },
+    {
+      "wave_number": 4,
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 5
+        },
+        {
+          "type": "veggie",
+          "count": 3
+        }
+      ],
+      "spawn_delay": 1.5
+    },
+    {
+      "wave_number": 5,
+      "enemies": [
+        {
+          "type": "bedtime",
+          "count": 5
+        },
+        {
+          "type": "tantrum",
+          "count": 5
+        }
+      ],
+      "spawn_delay": 1.3
+    },
+    {
+      "wave_number": 6,
+      "enemies": [
+        {
+          "type": "veggie",
+          "count": 5
+        },
+        {
+          "type": "screen_time",
+          "count": 3
+        }
+      ],
+      "spawn_delay": 1.2
+    },
+    {
+      "wave_number": 7,
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 8
+        },
+        {
+          "type": "bedtime",
+          "count": 4
+        },
+        {
+          "type": "veggie",
+          "count": 3
+        }
+      ],
+      "spawn_delay": 1.0
+    },
+    {
+      "wave_number": 8,
+      "enemies": [
+        {
+          "type": "screen_time",
+          "count": 6
+        },
+        {
+          "type": "veggie",
+          "count": 4
+        }
+      ],
+      "spawn_delay": 1.0
+    },
+    {
+      "wave_number": 9,
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 10
+        },
+        {
+          "type": "bedtime",
+          "count": 5
+        },
+        {
+          "type": "veggie",
+          "count": 5
+        }
+      ],
+      "spawn_delay": 0.8
+    },
+    {
+      "wave_number": 10,
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 12
+        },
+        {
+          "type": "bedtime",
+          "count": 6
+        },
+        {
+          "type": "veggie",
+          "count": 6
+        }
+      ],
+      "spawn_delay": 0.7,
+      "boss_modifier": 2.0
+    }
+  ],
+  "world": 1,
+  "scene_key": "01",
+  "scene_name": "宝宝的生日派对",
+  "theme": "default",
+  "background_color": "#FFFFFF",
+  "special_mechanic": null
 }

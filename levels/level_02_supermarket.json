@@ -12,20 +12,182 @@
   "story_before_wave_6": "购物车失控了！快拦住！",
   "story_after_wave_10": "购物结束！宝宝乖乖回家了。",
   "events": [
-    {"trigger": "wave_3_start", "type": "gold_rain", "amount": 30},
-    {"trigger": "wave_6_start", "type": "screen_flash", "message": "购物车失控！", "duration": 0.5},
-    {"trigger": "wave_10_start", "type": "boss_mode", "message": "大BOSS出现！"}
+    {
+      "trigger": "wave_3_start",
+      "type": "gold_rain",
+      "amount": 30
+    },
+    {
+      "trigger": "wave_6_start",
+      "type": "screen_flash",
+      "message": "购物车失控！",
+      "duration": 0.5
+    },
+    {
+      "trigger": "wave_10_start",
+      "type": "boss_mode",
+      "message": "大BOSS出现！"
+    }
   ],
   "waves": [
-    {"wave_number": 1, "enemies": [{"type": "tantrum", "count": 4}, {"type": "veggie", "count": 2}], "spawn_delay": 1.8},
-    {"wave_number": 2, "enemies": [{"type": "tantrum", "count": 6}, {"type": "veggie", "count": 3}], "spawn_delay": 1.6},
-    {"wave_number": 3, "enemies": [{"type": "tantrum", "count": 5}, {"type": "veggie", "count": 5}], "spawn_delay": 1.5},
-    {"wave_number": 4, "enemies": [{"type": "veggie", "count": 8}, {"type": "screen_time", "count": 4}], "spawn_delay": 1.4},
-    {"wave_number": 5, "enemies": [{"type": "tantrum", "count": 8}, {"type": "veggie", "count": 5}], "spawn_delay": 1.3},
-    {"wave_number": 6, "enemies": [{"type": "bedtime", "count": 6}, {"type": "veggie", "count": 6}], "spawn_delay": 1.2},
-    {"wave_number": 7, "enemies": [{"type": "tantrum", "count": 10}, {"type": "veggie", "count": 7}, {"type": "screen_time", "count": 5}], "spawn_delay": 1.0},
-    {"wave_number": 8, "enemies": [{"type": "bedtime", "count": 8}, {"type": "veggie", "count": 8}], "spawn_delay": 1.0},
-    {"wave_number": 9, "enemies": [{"type": "tantrum", "count": 12}, {"type": "bedtime", "count": 8}, {"type": "veggie", "count": 8}], "spawn_delay": 0.8},
-    {"wave_number": 10, "enemies": [{"type": "tantrum", "count": 15}, {"type": "bedtime", "count": 10}, {"type": "veggie", "count": 10}], "spawn_delay": 0.7, "boss_modifier": 2.0}
-  ]
+    {
+      "wave_number": 1,
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 4
+        },
+        {
+          "type": "veggie",
+          "count": 2
+        }
+      ],
+      "spawn_delay": 1.8
+    },
+    {
+      "wave_number": 2,
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 6
+        },
+        {
+          "type": "veggie",
+          "count": 3
+        }
+      ],
+      "spawn_delay": 1.6
+    },
+    {
+      "wave_number": 3,
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 5
+        },
+        {
+          "type": "veggie",
+          "count": 5
+        }
+      ],
+      "spawn_delay": 1.5
+    },
+    {
+      "wave_number": 4,
+      "enemies": [
+        {
+          "type": "veggie",
+          "count": 8
+        },
+        {
+          "type": "screen_time",
+          "count": 4
+        }
+      ],
+      "spawn_delay": 1.4
+    },
+    {
+      "wave_number": 5,
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 8
+        },
+        {
+          "type": "veggie",
+          "count": 5
+        }
+      ],
+      "spawn_delay": 1.3
+    },
+    {
+      "wave_number": 6,
+      "enemies": [
+        {
+          "type": "bedtime",
+          "count": 6
+        },
+        {
+          "type": "veggie",
+          "count": 6
+        }
+      ],
+      "spawn_delay": 1.2
+    },
+    {
+      "wave_number": 7,
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 10
+        },
+        {
+          "type": "veggie",
+          "count": 7
+        },
+        {
+          "type": "screen_time",
+          "count": 5
+        }
+      ],
+      "spawn_delay": 1.0
+    },
+    {
+      "wave_number": 8,
+      "enemies": [
+        {
+          "type": "bedtime",
+          "count": 8
+        },
+        {
+          "type": "veggie",
+          "count": 8
+        }
+      ],
+      "spawn_delay": 1.0
+    },
+    {
+      "wave_number": 9,
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 12
+        },
+        {
+          "type": "bedtime",
+          "count": 8
+        },
+        {
+          "type": "veggie",
+          "count": 8
+        }
+      ],
+      "spawn_delay": 0.8
+    },
+    {
+      "wave_number": 10,
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 15
+        },
+        {
+          "type": "bedtime",
+          "count": 10
+        },
+        {
+          "type": "veggie",
+          "count": 10
+        }
+      ],
+      "spawn_delay": 0.7,
+      "boss_modifier": 2.0
+    }
+  ],
+  "world": 1,
+  "scene_key": "01",
+  "scene_name": "超市大采购",
+  "theme": "default",
+  "background_color": "#FFFFFF",
+  "special_mechanic": null
 }

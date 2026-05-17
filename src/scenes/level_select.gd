@@ -77,4 +77,4 @@ func _start_level(level_index: int) -> void:
 	get_tree().change_scene_to_file(LEVEL_SCENES[level_index])
 
 func _on_back_pressed() -> void:
-	get_tree().change_scene_to_file("res://src/scenes/main_menu.tscn")
+	get_tree().change_scene_to_file("res://src/scenes/world_select.tscn")

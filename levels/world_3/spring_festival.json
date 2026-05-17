@@ -4,17 +4,184 @@
   "scene_name": "春节",
   "theme": "festival",
   "background_color": "#FFF0F5",
-  "special_mechanic": {"type": "gift_boxes", "description": "礼物盒随机增益", "effect": "wave_end_gift_spawn"},
+  "special_mechanic": {
+    "type": "gift_boxes",
+    "description": "礼物盒随机增益",
+    "effect": "wave_end_gift_spawn"
+  },
   "waves": [
-    {"enemies": [{"type": "tantrum", "count": 6}], "spawn_delay": 1.9, "boss_modifier": 1.5},
-    {"enemies": [{"type": "tantrum", "count": 9}], "spawn_delay": 1.7, "boss_modifier": 1.5},
-    {"enemies": [{"type": "tantrum", "count": 7}, {"type": "bedtime", "count": 3}], "spawn_delay": 1.4, "boss_modifier": 1.5},
-    {"enemies": [{"type": "tantrum", "count": 6}, {"type": "veggie", "count": 4}], "spawn_delay": 1.4, "boss_modifier": 1.5},
-    {"enemies": [{"type": "bedtime", "count": 6}, {"type": "tantrum", "count": 6}], "spawn_delay": 1.2, "boss_modifier": 1.5},
-    {"enemies": [{"type": "veggie", "count": 6}, {"type": "screen_time", "count": 4}], "spawn_delay": 1.1, "boss_modifier": 1.5},
-    {"enemies": [{"type": "tantrum", "count": 9}, {"type": "bedtime", "count": 5}, {"type": "veggie", "count": 4}], "spawn_delay": 0.95, "boss_modifier": 1.5},
-    {"enemies": [{"type": "screen_time", "count": 7}, {"type": "veggie", "count": 5}, {"type": "bath_time", "count": 3}], "spawn_delay": 0.95, "boss_modifier": 1.5},
-    {"enemies": [{"type": "tantrum", "count": 11}, {"type": "bedtime", "count": 6}, {"type": "veggie", "count": 6}, {"type": "screen_time", "count": 6}, {"type": "bath_time", "count": 4}], "spawn_delay": 0.75, "boss_modifier": 1.5},
-    {"enemies": [{"type": "tantrum", "count": 13}, {"type": "bedtime", "count": 7}, {"type": "veggie", "count": 7}, {"type": "screen_time", "count": 7}, {"type": "bath_time", "count": 5}, {"type": "outing_refusal", "count": 4}], "spawn_delay": 0.65, "boss_modifier": 3.0}
-  ]
+    {
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 6
+        }
+      ],
+      "spawn_delay": 1.9,
+      "boss_modifier": 1.5
+    },
+    {
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 9
+        }
+      ],
+      "spawn_delay": 1.7,
+      "boss_modifier": 1.5
+    },
+    {
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 7
+        },
+        {
+          "type": "bedtime",
+          "count": 3
+        }
+      ],
+      "spawn_delay": 1.4,
+      "boss_modifier": 1.5
+    },
+    {
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 6
+        },
+        {
+          "type": "veggie",
+          "count": 4
+        }
+      ],
+      "spawn_delay": 1.4,
+      "boss_modifier": 1.5
+    },
+    {
+      "enemies": [
+        {
+          "type": "bedtime",
+          "count": 6
+        },
+        {
+          "type": "tantrum",
+          "count": 6
+        }
+      ],
+      "spawn_delay": 1.2,
+      "boss_modifier": 1.5
+    },
+    {
+      "enemies": [
+        {
+          "type": "veggie",
+          "count": 6
+        },
+        {
+          "type": "screen_time",
+          "count": 4
+        }
+      ],
+      "spawn_delay": 1.1,
+      "boss_modifier": 1.5
+    },
+    {
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 9
+        },
+        {
+          "type": "bedtime",
+          "count": 5
+        },
+        {
+          "type": "veggie",
+          "count": 4
+        }
+      ],
+      "spawn_delay": 0.95,
+      "boss_modifier": 1.5
+    },
+    {
+      "enemies": [
+        {
+          "type": "screen_time",
+          "count": 7
+        },
+        {
+          "type": "veggie",
+          "count": 5
+        },
+        {
+          "type": "bath_time",
+          "count": 3
+        }
+      ],
+      "spawn_delay": 0.95,
+      "boss_modifier": 1.5
+    },
+    {
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 11
+        },
+        {
+          "type": "bedtime",
+          "count": 6
+        },
+        {
+          "type": "veggie",
+          "count": 6
+        },
+        {
+          "type": "screen_time",
+          "count": 6
+        },
+        {
+          "type": "bath_time",
+          "count": 4
+        }
+      ],
+      "spawn_delay": 0.75,
+      "boss_modifier": 1.5
+    },
+    {
+      "enemies": [
+        {
+          "type": "tantrum",
+          "count": 13
+        },
+        {
+          "type": "bedtime",
+          "count": 7
+        },
+        {
+          "type": "veggie",
+          "count": 7
+        },
+        {
+          "type": "screen_time",
+          "count": 7
+        },
+        {
+          "type": "bath_time",
+          "count": 5
+        },
+        {
+          "type": "outing_refusal",
+          "count": 4
+        }
+      ],
+      "spawn_delay": 0.65,
+      "boss_modifier": 3.0
+    }
+  ],
+  "level_id": "world3_spring",
+  "difficulty": "normal",
+  "initial_gold": 200,
+  "initial_lives": 20,
+  "map_theme": "festival"
 }

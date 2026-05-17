@@ -72,11 +72,21 @@ static func _validate_level(data: Dictionary) -> bool:
 
 static func _get_level_index(file_name: String) -> int:
 	# Extract index from filename like "level_01_home.json" -> 0
+	# Or "home.json" -> 0 (for world_N/ directory files)
 	var pattern = RegEx.new()
 	pattern.compile("level_(\\d+)")
 	var result = pattern.search(file_name)
 	if result:
 		return result.get_string(1).to_int() - 1
+
+	# Try scene_index from level data (set after loading)
+	# This is a fallback for files without level_N prefix
+	var num_pattern = RegEx.new()
+	num_pattern.compile("(\\d+)")
+	result = num_pattern.search(file_name)
+	if result:
+		return result.get_string(1).to_int() - 1
+
 	return 0
 
 static func _get_default_levels() -> Array[Dictionary]:
